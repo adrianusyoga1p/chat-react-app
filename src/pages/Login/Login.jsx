@@ -12,6 +12,7 @@ const Login = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const login = async (e) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ const Login = () => {
       alert(err.message);
     } finally {
       setLoading(false);
+      return navigate("/chat-app");
     }
   };
 

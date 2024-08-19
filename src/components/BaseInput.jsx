@@ -24,7 +24,7 @@ const BaseInput = forwardRef(({ label, className, ...props }, ref) => {
         <input
           ref={ref}
           {...props}
-          type={show ? "text" : "password"}
+          type={props.type === "password" && show ? "text" : props.type}
           className={cn(
             `bg-white rounded-md border border-gray-100 outline-none p-2.5 text-sm ${
               props.type === "file" ? "hidden" : ""

@@ -17,13 +17,13 @@ const UserList = () => {
   const [chats, setChats] = useState([]);
   const [input, setInput] = useState("");
   const [addUser, setAddUser] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const logout = async () => {
     try {
       await auth.signOut();
       resetChat();
-      return navigate("/");
+      return navigate("/", { replace: true });
       // return <Navigate to="/" replace/>
     } catch (error) {
       console.error("Error during logout:", error);

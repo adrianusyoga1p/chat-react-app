@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../../../firebase";
 import Loading from "@/components/Loading";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -25,7 +25,7 @@ const Login = () => {
       alert(err.message);
     } finally {
       setLoading(false);
-      return navigate("/chat-app");
+      return navigate("/chat-app", { replace: true });
     }
   };
 
@@ -69,7 +69,9 @@ const Login = () => {
           </button>
           <p className="text-sm text-gray-600 text-center">
             Don’t have an account?{" "}
-            <NavLink to="/register" className="text-blue-500">Sign Up</NavLink>
+            <NavLink to="/register" className="text-blue-500">
+              Sign Up
+            </NavLink>
           </p>
         </form>
       </div>

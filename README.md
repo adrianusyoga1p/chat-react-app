@@ -11,8 +11,8 @@ The technologies used in its development include:
 
 Tutorial for running this project locally:
 
-1. git clone https://github.com/adrianusyoga1p/chat-react-app.git
-2. npm install
-3. npm run dev
+1. `git clone https://github.com/adrianusyoga1p/chat-react-app.git`
+2. `npm install`
+3. `npm run dev`
 
 Good luck!

@@ -23,7 +23,7 @@ const UserList = () => {
     try {
       await auth.signOut();
       resetChat();
-      return navigate("/login");
+      return navigate("/");
       // return <Navigate to="/" replace/>
     } catch (error) {
       console.error("Error during logout:", error);

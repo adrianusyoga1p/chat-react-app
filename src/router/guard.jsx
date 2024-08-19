@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 const GuardedRoute = ({ auth, children }) => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (auth) {
+    if (auth != null) {
       navigate("/chat-app", { replace: true });
-    } else if (!auth) {
+    } else if (auth == null) {
       navigate("/", { replace: true });
     }
   }, [auth, navigate]);

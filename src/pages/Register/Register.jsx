@@ -12,7 +12,7 @@ import {
 import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import upload from "@/firebase/upload";
-import { Navigate, NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import Loading from "@/components/Loading";
 import Login from "../Login/Login";
 
@@ -31,6 +31,7 @@ const Register = () => {
   const Swal = useSwal();
 
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleAvatar = (e) => {
     if (e.target.files[0]) {
@@ -87,6 +88,7 @@ const Register = () => {
       console.log(error);
     } finally {
       setLoading(false);
+      return navigate("/", { replace: true });
     }
   };
 
@@ -151,7 +153,7 @@ const Register = () => {
           </button>
           <p className="text-sm text-gray-600 text-center">
             Already have an account?{" "}
-            <NavLink className="text-blue-600" to="/login">
+            <NavLink className="text-blue-600" to="/">
               Log in
             </NavLink>
           </p>

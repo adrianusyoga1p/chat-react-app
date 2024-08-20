@@ -7,7 +7,6 @@ import { chatStore } from "@/store/chatStore";
 import { userStore } from "@/store/userStore";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
-import moment from "moment";
 import { useFormatter } from "@/lib/useFormatter";
 
 const Chat = () => {
@@ -31,6 +30,7 @@ const Chat = () => {
   }, [chatId]);
 
   const { formatDate } = useFormatter();
+
 
   return (
     <div className="p-6 bg-soft_primary w-[calc(100%-320px)] max-h-screen relative flex-col flex justify-between">

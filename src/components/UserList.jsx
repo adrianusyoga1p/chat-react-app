@@ -3,7 +3,6 @@ import ChatList from "./ChatList";
 import { auth, db } from "../../firebase";
 import { chatStore } from "@/store/chatStore";
 import { Navigate, useNavigate } from "react-router-dom";
-import Loading from "./Loading";
 import BaseInput from "./BaseInput";
 import { useEffect, useState } from "react";
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
@@ -17,14 +16,12 @@ const UserList = () => {
   const [chats, setChats] = useState([]);
   const [input, setInput] = useState("");
   const [addUser, setAddUser] = useState(false);
-  const navigate = useNavigate();
 
   const logout = async () => {
     try {
       await auth.signOut();
+      userStore.getState().fetchUserInfo(null);
       resetChat();
-      return navigate("/", { replace: true });
-      // return <Navigate to="/" replace/>
     } catch (error) {
       console.error("Error during logout:", error);
     }

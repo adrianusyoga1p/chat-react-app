@@ -4,10 +4,9 @@ import { db } from "../../firebase";
 
 export const userStore = create((set) => ({
   currentUser: null,
-  // token: null,
   isLoading: true,
   fetchUserInfo: async (uid) => {
-    if (!uid) return set({ currentUser: null, isLoading: false });
+    if (!uid) return set({ currentUser: null, isLoading: false});
 
     try {
       const docRef = doc(db, "users", uid);
@@ -16,11 +15,11 @@ export const userStore = create((set) => ({
       if (docSnap.exists()) {
         set({ currentUser: docSnap.data(), isLoading: false });
       } else {
-        set({ currentUser: null, isLoading: false });
+        set({ currentUser: null, isLoading: false});
       }
     } catch (err) {
       console.log(err);
-      return set({ currentUser: null, isLoading: false });
+      return set({ currentUser: null, isLoading: false});
     }
   },
 }));

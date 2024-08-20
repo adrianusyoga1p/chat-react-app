@@ -4,6 +4,7 @@ import { useState } from "react";
 import { auth } from "../../../firebase";
 import Loading from "@/components/Loading";
 import { NavLink, useNavigate } from "react-router-dom";
+import { userStore } from "@/store/userStore";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -12,7 +13,6 @@ const Login = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const login = async (e) => {
     e.preventDefault();
@@ -25,14 +25,11 @@ const Login = () => {
       alert(err.message);
     } finally {
       setLoading(false);
-      return navigate("/chat-app", { replace: true });
     }
   };
 
-  if (loading) return <Loading />;
-
   return (
-    <div className="p-6 grid md:grid-cols-2 bg-soft_primary h-screen">
+    <div className="p-6 grid md:grid-cols-2 bg-soft_primary h-screen gap-4">
       <div className="rounded-2xl h-full bg-primary max-md:hidden"></div>
       <div className="p-4 flex items-center justify-center">
         <form className="space-y-4" onSubmit={login}>
@@ -63,7 +60,9 @@ const Login = () => {
           <button
             disabled={loading}
             type="submit"
-            className="bg-primary p-3 rounded text-white flex w-full justify-center items-center"
+            className={`bg-primary p-3 rounded text-white flex w-full justify-center items-center ${
+              loading && "opacity-75"
+            }`}
           >
             Login
           </button>

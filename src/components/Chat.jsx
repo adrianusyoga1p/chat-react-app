@@ -8,6 +8,7 @@ import { userStore } from "@/store/userStore";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import moment from "moment";
+import { useFormatter } from "@/lib/useFormatter";
 
 const Chat = () => {
   const [chat, setChat] = useState();
@@ -29,13 +30,7 @@ const Chat = () => {
     };
   }, [chatId]);
 
-  const formatDate = (second) => {
-    const secondsMatch = second.match(/seconds=(\d+)/);
-    const seconds = secondsMatch ? parseInt(secondsMatch[1], 10) : null;
-    const milliseconds = seconds * 1000;
-    const date = new Date(milliseconds);
-    return moment(date).format("HH:mm");
-  };
+  const { formatDate } = useFormatter();
 
   return (
     <div className="p-6 bg-soft_primary w-[calc(100%-320px)] max-h-screen relative flex-col flex justify-between">

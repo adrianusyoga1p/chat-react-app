@@ -71,6 +71,7 @@ const InputMessage = ({ currentUser, chatId, user }) => {
     >
       <input
         type="text"
+        value={text}
         onChange={(e) => setText(e.target.value)}
         className="border-none outline-none p-2 w-full placeholder:text-gray-400 placeholder:font-normal"
         placeholder="Input messages"

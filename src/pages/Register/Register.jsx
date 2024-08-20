@@ -12,9 +12,7 @@ import {
 import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import upload from "@/firebase/upload";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import Loading from "@/components/Loading";
-import Login from "../Login/Login";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [avatar, setAvatar] = useState({
@@ -92,8 +90,6 @@ const Register = () => {
     }
   };
 
-  if (loading) return <Loading />;
-
   return (
     <div className="p-6 grid md:grid-cols-2 bg-soft_primary h-screen">
       <div className="rounded-2xl h-full bg-primary max-md:hidden"></div>
@@ -146,8 +142,11 @@ const Register = () => {
             label="Upload your avatar"
           />
           <button
+            disabled={loading}
             type="submit"
-            className="bg-primary p-3 rounded text-white flex w-full justify-center items-center"
+            className={`bg-primary p-3 rounded text-white flex w-full justify-center items-center ${
+              loading && "opacity-75"
+            }`}
           >
             {loading ? "Loading.." : "Register"}
           </button>

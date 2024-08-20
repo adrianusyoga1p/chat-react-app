@@ -2,7 +2,6 @@ import { userStore } from "@/store/userStore";
 import ChatList from "./ChatList";
 import { auth, db } from "../../firebase";
 import { chatStore } from "@/store/chatStore";
-import { Navigate, useNavigate } from "react-router-dom";
 import BaseInput from "./BaseInput";
 import { useEffect, useState } from "react";
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
@@ -45,6 +44,7 @@ const UserList = () => {
         const chatData = await Promise.all(promises);
 
         setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
+
       }
     );
 

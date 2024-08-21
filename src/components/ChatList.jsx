@@ -1,5 +1,5 @@
 import { useFormatter } from "@/lib/useFormatter";
-import { chatStore } from "@/store/chatStore";
+import avatar from "@/assets/avatar.jpg"
 
 const ChatList = ({ data, onClick, isSeen, selected }) => {
   const { formateTime } = useFormatter();
@@ -13,7 +13,7 @@ const ChatList = ({ data, onClick, isSeen, selected }) => {
     >
       <div className="flex gap-4 items-center">
         <img
-          src={data?.user?.avatar}
+          src={data?.user?.avatar || avatar}
           alt="avatar"
           className="h-11 w-11 rounded-full"
         />

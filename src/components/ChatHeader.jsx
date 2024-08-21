@@ -4,6 +4,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { chatStore } from "@/store/chatStore";
 import { userStore } from "@/store/userStore";
+import avatar from "@/assets/avatar.jpg"
 
 const ChatHeader = ({ user }) => {
   const { chatId } = chatStore();
@@ -58,7 +59,7 @@ const ChatHeader = ({ user }) => {
     <div className="sticky w-full rounded-lg bg-white p-2.5 top-0 shadow-md">
       <div className="flex gap-4 items-center">
         <img
-          src={user?.avatar}
+          src={user?.avatar || avatar}
           alt="avatar"
           className="h-11 w-11 rounded-full"
         />

@@ -13,6 +13,7 @@ import { auth, db } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import upload from "@/firebase/upload";
 import { NavLink, useNavigate } from "react-router-dom";
+import avatarDefault from "@/assets/avatar.jpg"
 
 const Register = () => {
   const [avatar, setAvatar] = useState({
@@ -69,7 +70,7 @@ const Register = () => {
         form.email,
         form.password
       );
-      const imgAvatar = await upload(avatar.file);
+      const imgAvatar = avatar.file? await upload(avatar.file) : avatarDefault;
 
       await setDoc(doc(db, "users", res.user.uid), {
         username: form.username,
@@ -131,7 +132,7 @@ const Register = () => {
           />
           {avatar.url && (
             <img
-              src={avatar.url || "./avatar.png"}
+              src={avatar.url || avatarDefault}
               className="w-20 h-20 object-contain"
             />
           )}

@@ -10,11 +10,11 @@ const GuardedRoute = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unSub = onAuthStateChanged(auth, (user) => {
+    const unSub = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         return navigate("/", { replace: true });
       } else {
-        fetchUserInfo(user?.uid);
+        await fetchUserInfo(user?.uid);
         navigate("/chat-app", { replace: true });
       }
     });

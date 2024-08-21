@@ -9,12 +9,12 @@ export const PublicRoute = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unSub = onAuthStateChanged(auth, (user) => {
+    const unSub = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        fetchUserInfo(user.uid);
+        await fetchUserInfo(user.uid);
         navigate("/chat-app", { replace: true });
       } else {
-        return navigate("/", {replace: true});
+        return navigate("/", { replace: true });
       }
     });
 
@@ -28,7 +28,6 @@ export const PublicRoute = ({ children }) => {
       return navigate("/", { replace: true });
     }
   }, [currentUser, navigate, isLoading]);
-
 
   return !currentUser ? children : null;
 };

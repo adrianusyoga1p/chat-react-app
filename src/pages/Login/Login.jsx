@@ -1,10 +1,13 @@
 import BaseInput from "@/components/BaseInput";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { useState } from "react";
-import { auth } from "../../../firebase";
-import Loading from "@/components/Loading";
-import { NavLink, useNavigate } from "react-router-dom";
-import { userStore } from "@/store/userStore";
+import { auth, db } from "../../../firebase";
+import { NavLink } from "react-router-dom";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -28,11 +31,40 @@ const Login = () => {
     }
   };
 
+  const loginGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const res = await signInWithPopup(auth, provider);
+
+      await setDoc(doc(db, "users", res?.user?.uid), {
+        username: res?.user?.displayName,
+        email: res?.user?.email,
+        avatar: res?.user?.photoURL,
+        id: res?.user?.uid,
+        blocked: [],
+      });
+
+      const userChatsRef = doc(db, "userchats", res?.user?.uid);
+      const userChatsDoc = await getDoc(userChatsRef);
+
+      if (!userChatsDoc.exists()) {
+        await setDoc(userChatsRef, {
+          chats: [],
+        });
+      }
+    } catch (error) {
+      console.log(error.message);
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="p-6 grid md:grid-cols-2 bg-soft_primary h-screen gap-4">
       <div className="rounded-2xl h-full bg-primary max-md:hidden"></div>
       <div className="p-4 flex items-center justify-center">
-        <form className="space-y-4" onSubmit={login}>
+        <div className="space-y-4">
           <h1 className="text-center font-bold text-gray-700 text-2xl">
             Login
           </h1>
@@ -60,19 +92,33 @@ const Login = () => {
           <button
             disabled={loading}
             type="submit"
+            onClick={login}
             className={`bg-primary p-3 rounded text-white flex w-full justify-center items-center ${
               loading && "opacity-75"
             }`}
           >
             Login
           </button>
+          <div className="flex w-full items-center gap-6">
+            <div className="h-px bg-gray-300 w-full"></div>
+            <p>or</p>
+            <div className="h-px bg-gray-300 w-full"></div>
+          </div>
+          <div className="space-y-4">
+            <button
+              onClick={loginGoogle}
+              className="bg-white border p-3 rounded flex w-full justify-center items-center"
+            >
+              Google
+            </button>
+          </div>
           <p className="text-sm text-gray-600 text-center">
             Don’t have an account?{" "}
             <NavLink to="/register" className="text-blue-500">
               Sign Up
             </NavLink>
           </p>
-        </form>
+        </div>
       </div>
     </div>
   );

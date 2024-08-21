@@ -1,32 +1,41 @@
-import Avatar from "@/assets/avatar.png";
 import { useFormatter } from "@/lib/useFormatter";
+import { chatStore } from "@/store/chatStore";
 
-const ChatList = ({ data, onClick, isSeen }) => {
+const ChatList = ({ data, onClick, isSeen, selected }) => {
   const { formateTime } = useFormatter();
+
   return (
     <div
-      className="rounded-lg p-4 w-full hover:bg-soft_primary transition-colors cursor-pointer"
+      className={`rounded-lg p-4 w-full hover:bg-soft_primary transition-colors cursor-pointer relative ${
+        data.chatId === selected ? "bg-soft_primary" : ""
+      }`}
       onClick={onClick}
     >
       <div className="flex gap-4 items-center">
-        {!isSeen && <div className="w-2 h-2 rounded-full bg-primary"></div>}
-        <img src={data?.user?.avatar} alt="avatar" className="h-11 w-11" />
+        <img
+          src={data?.user?.avatar}
+          alt="avatar"
+          className="h-11 w-11 rounded-full"
+        />
         <div>
           <p className="font-medium">{data?.user?.username}</p>
           <p
             className="text-sm text-gray-500 truncate max-w-32"
-            title="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, numquam! Aliquid porro ut saepe sit. Harum obcaecati voluptate fugit blanditiis?"
+            title={data?.lastMessage}
           >
             {data?.lastMessage}
           </p>
         </div>
-        <p
-          className={`text-sm ml-auto mb-auto ${
-            !isSeen ? "text-primary font-semibold" : "text-gray-500"
-          }`}
-        >
-          {formateTime(data?.updatedAt)}
-        </p>
+        <div className="ml-auto flex flex-col items-center justify-between">
+          <p
+            className={`text-sm ${
+              !isSeen ? "text-primary font-semibold mb-3" : "text-gray-500 mb-4"
+            }`}
+          >
+            {formateTime(data?.updatedAt)}
+          </p>
+          {!isSeen && <div className="w-2 h-2 rounded-full bg-primary"></div>}
+        </div>
       </div>
     </div>
   );

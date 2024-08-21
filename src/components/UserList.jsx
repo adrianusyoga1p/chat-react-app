@@ -4,21 +4,28 @@ import { auth, db } from "../../firebase";
 import { chatStore } from "@/store/chatStore";
 import BaseInput from "./BaseInput";
 import { useEffect, useState } from "react";
-import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import AddUser from "./AddUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { signOut } from "firebase/auth";
 
 const UserList = () => {
   const { resetChat, changeChat } = chatStore();
   const { currentUser } = userStore();
   const [chats, setChats] = useState([]);
   const [input, setInput] = useState("");
+  const [selectChat, setSelectChat] = useState(null)
   const [addUser, setAddUser] = useState(false);
 
   const logout = async () => {
     try {
-      await auth.signOut();
+      await signOut(auth);
       userStore.getState().fetchUserInfo(null);
       resetChat();
     } catch (error) {
@@ -30,9 +37,9 @@ const UserList = () => {
     const unSub = onSnapshot(
       doc(db, "userchats", currentUser.id),
       async (res) => {
-        const items = res.data().chats;
+        const items = res.data()?.chats;
 
-        const promises = items.map(async (item) => {
+        const promises = items?.map(async (item) => {
           const userDocRef = doc(db, "users", item.receiverId);
           const userDocSnap = await getDoc(userDocRef);
 
@@ -44,7 +51,6 @@ const UserList = () => {
         const chatData = await Promise.all(promises);
 
         setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt));
-
       }
     );
 
@@ -72,6 +78,7 @@ const UserList = () => {
         chats: usersChat,
       });
       changeChat(chat.chatId, chat.user);
+      setSelectChat(chat.chatId);
     } catch (error) {
       console.log(error);
     }
@@ -81,14 +88,18 @@ const UserList = () => {
     c.user.username.toLowerCase().includes(input.toLowerCase())
   );
 
+  const handleClose = () => {
+    setAddUser(false);
+  };
+
   return (
     <div className="w-[320px] border-r p-4 flex flex-col gap-4 max-h-screen relative bg-white">
       <div className="flex items-center justify-between">
         <div className="flex gap-4 items-center">
           <img
-            src={currentUser?.avatar || "./avatar.png"}
+            src={currentUser?.avatar}
             alt="avatar"
-            className="h-11 w-11"
+            className="h-11 w-11 rounded-full"
           />
           <div>
             <p className="font-medium">{currentUser?.username}</p>
@@ -126,9 +137,10 @@ const UserList = () => {
             onClick={() => handleSelect(chat)}
             data={chat}
             isSeen={chat.isSeen}
+            selected={selectChat}
           />
         ))}
-        {addUser && <AddUser />}
+        {addUser && <AddUser close={handleClose} />}
       </div>
       <div className="w-full absolute bottom-0 bg-gradient-to-t from-white h-40 left-0 right-0 pointer-events-none"></div>
     </div>

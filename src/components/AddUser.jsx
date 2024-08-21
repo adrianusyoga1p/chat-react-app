@@ -5,6 +5,7 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   serverTimestamp,
@@ -13,9 +14,12 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const AddUser = () => {
+const AddUser = ({ close }) => {
   const [username, setUsername] = useState("");
+  const [disabled, setDisabled] = useState(false);
   const [user, setUser] = useState(null);
   const { currentUser } = userStore();
 
@@ -40,8 +44,21 @@ const AddUser = () => {
     const userChatRef = collection(db, "userchats");
 
     try {
-      const newChatRef = doc(chatRef);
+      const userChatDoc = await getDoc(doc(userChatRef, user.id));
+      const currentChats = userChatDoc.exists() ? userChatDoc.data().chats : [];
 
+      const chatExists = currentChats.some(
+        (chat) => chat.receiverId === currentUser.id
+      );
+      console.log(currentChats);
+
+      if (chatExists) {
+        setDisabled(true);
+        setUsername("Username already exist in your chatlist");
+        return;
+      }
+
+      const newChatRef = doc(chatRef);
       await setDoc(newChatRef, {
         createdAt: serverTimestamp(),
         messages: [],
@@ -68,11 +85,20 @@ const AddUser = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="fixed w-screen h-screen bg-black/60 inset-0 z-30 p-10 flex justify-center items-center">
       <div className="bg-white rounded-lg h-fit text-start w-fit p-6 space-y-4">
-        <h4 className="text-gray-800 text-lg">Add User</h4>
-        <form onSubmit={handleSearch} className="flex items-center gap-2">
+        <div className="flex items-center justify-between">
+          <h4 className="text-gray-800 text-lg">Add User</h4>
+          <button onClick={close}>
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        </div>
+        <form
+          onSubmit={handleSearch}
+          className="flex items-center gap-2 w-full justify-between"
+        >
           <BaseInput onChange={(e) => setUsername(e.target.value)} />
           <button
             type="submit"
@@ -91,14 +117,17 @@ const AddUser = () => {
                 </div>
               </div>
             </div>
-            <div className="flex">
-              <button
-                onClick={handleAdd}
-                className="bg-primary ml-auto text-sm text-white rounded p-2"
-              >
-                Add User
-              </button>
-            </div>
+            {disabled && <p className="text-red-500">{username}</p>}
+            {!disabled && (
+              <div className="flex">
+                <button
+                  onClick={handleAdd}
+                  className="bg-primary ml-auto text-sm text-white rounded p-2"
+                >
+                  Add User
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>

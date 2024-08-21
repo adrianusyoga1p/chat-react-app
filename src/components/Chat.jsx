@@ -31,7 +31,6 @@ const Chat = () => {
 
   const { formatDate } = useFormatter();
 
-
   return (
     <div className="p-6 bg-soft_primary w-[calc(100%-320px)] max-h-screen relative flex-col flex justify-between">
       <ChatHeader user={user} chatId={chatId} currentUser={currentUser} />

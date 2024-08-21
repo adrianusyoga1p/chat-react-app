@@ -27,12 +27,15 @@ const AddUser = ({ close }) => {
     e.preventDefault();
     try {
       const userRef = collection(db, "users");
-      const q = query(userRef, where("username", "==", username));
+      const querySnapshot = await getDocs(userRef);
 
-      const querySnapshot = await getDocs(q);
+      // Filter documents using includes for partial username matching
+      const matchingUsers = querySnapshot.docs.filter((doc) =>
+        doc.data().username.toLowerCase().includes(username.toLowerCase())
+      );
 
-      if (!querySnapshot.empty) {
-        setUser(querySnapshot.docs[0].data());
+      if (matchingUsers.length > 0) {
+        setUser(matchingUsers[0].data()); // You can adjust if you want to handle multiple results
       }
     } catch (error) {
       console.log(error);
@@ -111,7 +114,7 @@ const AddUser = ({ close }) => {
           <>
             <div className="rounded-lg p-4 w-full hover:bg-soft_primary transition-colors cursor-pointer">
               <div className="flex gap-4 items-center">
-                <img src={user?.avatar} alt="avatar" className="h-11 w-11" />
+                <img src={user?.avatar} alt="avatar" className="h-11 w-11 rounded-full" />
                 <div>
                   <p className="font-medium">{user?.username}</p>
                 </div>

@@ -92,7 +92,7 @@ const Register = () => {
   };
 
   return (
-    <div className="p-6 grid md:grid-cols-2 bg-soft_primary h-screen">
+    <div className="p-6 grid md:grid-cols-2 bg-soft_primary h-screen gap-4">
       <div className="rounded-2xl h-full bg-primary max-md:hidden"></div>
       <div className="p-4 flex items-center justify-center">
         <form className="space-y-4" onSubmit={register}>

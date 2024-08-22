@@ -4,55 +4,82 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { chatStore } from "@/store/chatStore";
 import { userStore } from "@/store/userStore";
-import avatar from "@/assets/avatar.jpg"
+import avatar from "@/assets/avatar.jpg";
+import { useSwal } from "@/lib/useSwal";
 
 const ChatHeader = ({ user }) => {
   const { chatId } = chatStore();
   const { currentUser } = userStore();
+  const Swal = useSwal();
+
   const handleDelete = async () => {
     const chatRef = doc(db, "chats", chatId);
     const userID = [currentUser.id, user.id];
     const chatDoc = await getDoc(chatRef);
-
     try {
       if (chatDoc.exists()) {
-        const chatData = chatDoc.data();
-        if (Array.isArray(chatData.messages) && chatData.messages.length > 0) {
-          userID.forEach(async (id) => {
-            const userChatRef = doc(db, "userchats", id);
-            const userChatSnapshot = await getDoc(userChatRef);
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then(async () => {
+          const chatData = chatDoc.data();
+          if (
+            Array.isArray(chatData.messages) &&
+            chatData.messages.length > 0
+          ) {
+            userID.forEach(async (id) => {
+              const userChatRef = doc(db, "userchats", id);
+              const userChatSnapshot = await getDoc(userChatRef);
 
-            if (userChatSnapshot.exists()) {
-              const userChatData = userChatSnapshot.data();
+              if (userChatSnapshot.exists()) {
+                const userChatData = userChatSnapshot.data();
 
-              const chatIndex = userChatData.chats.findIndex(
-                (c) => c.chatId === chatId
-              );
+                const chatIndex = userChatData.chats.findIndex(
+                  (c) => c.chatId === chatId
+                );
 
-              userChatData.chats[chatIndex].lastMessage = "Message was deleted";
-              userChatData.chats[chatIndex].isSeen =
-                id === currentUser.id ? true : false;
-              userChatData.chats[chatIndex].updatedAt = Date.now();
+                userChatData.chats[chatIndex].lastMessage =
+                  "Message was deleted";
+                userChatData.chats[chatIndex].isSeen =
+                  id === currentUser.id ? true : false;
+                userChatData.chats[chatIndex].updatedAt = Date.now();
 
-              await updateDoc(userChatRef, {
-                chats: userChatData.chats,
-              });
-            }
-          });
+                await updateDoc(userChatRef, {
+                  chats: userChatData.chats,
+                });
+              }
+            });
 
-          // Mengatur array messages menjadi kosong
-          await updateDoc(chatRef, {
-            messages: [],
-          });
-          console.log("Semua pesan berhasil dihapus!");
-        } else {
-          console.log("Array messages null, tidak ada pesan untuk dihapus.");
-        }
+            await updateDoc(chatRef, {
+              messages: [],
+            });
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          } else {
+            Swal.fire({
+              title: "Error!",
+              text: "Array messages is null, can't delete this messages.",
+              icon: "error",
+            });
+          }
+        });
       } else {
-        console.log("Dokumen chat tidak ditemukan.");
+        Swal.fire({
+          title: "Error!",
+          text: "Chat document not found",
+          icon: "error",
+        });
       }
     } catch (error) {
-      console.error("Gagal menghapus semua pesan: ", error);
+      console.error("Failed to delete all messages: ", error);
     }
   };
   return (

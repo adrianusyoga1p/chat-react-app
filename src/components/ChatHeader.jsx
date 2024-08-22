@@ -60,13 +60,13 @@ const ChatHeader = ({ user }) => {
             });
             Swal.fire({
               title: "Deleted!",
-              text: "Your file has been deleted.",
+              text: "Your message has been deleted.",
               icon: "success",
             });
           } else {
             Swal.fire({
               title: "Error!",
-              text: "Array messages is null, can't delete this messages.",
+              text: "Message is already empty, can't delete this message",
               icon: "error",
             });
           }
@@ -74,7 +74,7 @@ const ChatHeader = ({ user }) => {
       } else {
         Swal.fire({
           title: "Error!",
-          text: "Chat document not found",
+          text: "Message not found",
           icon: "error",
         });
       }

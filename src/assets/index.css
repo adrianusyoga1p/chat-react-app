@@ -5,3 +5,7 @@
 body{
   @apply w-screen !h-screen overflow-hidden
 }
+
+html {
+  font-family: "Rubik", sans-serif;
+}

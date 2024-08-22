@@ -70,7 +70,7 @@ const Login = () => {
           </h1>
           <BaseInput
             label="Email"
-            className="w-96"
+            className="min-w-64 lg:min-w-96"
             onChange={(e) =>
               setForm({
                 ...form,
@@ -81,7 +81,7 @@ const Login = () => {
           <BaseInput
             type="password"
             label="Password"
-            className="w-96"
+            className="min-w-64 lg:min-w-96"
             onChange={(e) =>
               setForm({
                 ...form,

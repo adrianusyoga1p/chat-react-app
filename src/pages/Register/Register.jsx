@@ -101,7 +101,7 @@ const Register = () => {
           </h1>
           <BaseInput
             label="Username"
-            className="w-96"
+            className="min-w-64 lg:min-w-96"
             onChange={(e) =>
               setForm({
                 ...form,
@@ -111,7 +111,7 @@ const Register = () => {
           />
           <BaseInput
             label="Email"
-            className="w-96"
+            className="min-w-64 lg:min-w-96"
             onChange={(e) =>
               setForm({
                 ...form,
@@ -122,7 +122,7 @@ const Register = () => {
           <BaseInput
             type="password"
             label="Password"
-            className="w-96"
+            className="min-w-64 lg:min-w-96"
             onChange={(e) =>
               setForm({
                 ...form,

@@ -20,7 +20,7 @@ const BaseInput = forwardRef(({ label, className, ...props }, ref) => {
           {label}
         </label>
       )}
-      <div className="relative min-w-56">
+      <div className="relative">
         <input
           ref={ref}
           {...props}

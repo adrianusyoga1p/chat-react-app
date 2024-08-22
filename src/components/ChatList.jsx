@@ -13,7 +13,7 @@ const ChatList = ({ data, onClick, isSeen, selected }) => {
     >
       <div className="flex gap-4 items-center">
         <img
-          src={data?.user?.avatar || avatar}
+          src={data?.user?.avatar}
           alt="avatar"
           className="h-11 w-11 rounded-full"
         />

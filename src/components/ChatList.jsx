@@ -18,7 +18,7 @@ const ChatList = ({ data, onClick, isSeen, selected }) => {
           className="h-11 w-11 rounded-full"
         />
         <div>
-          <p className="font-medium">{data?.user?.username}</p>
+          <p className="font-medium truncate max-w-32">{data?.user?.username}</p>
           <p
             className="text-sm text-gray-500 truncate max-w-32"
             title={data?.lastMessage}

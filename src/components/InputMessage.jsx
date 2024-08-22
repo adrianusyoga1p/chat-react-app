@@ -76,7 +76,7 @@ const InputMessage = ({ currentUser, chatId, user }) => {
         className="border-none outline-none p-2 w-full placeholder:text-gray-400 placeholder:font-normal"
         placeholder="Input messages"
       />
-      <button className="bg-primary px-3 py-1.5 rounded-md text-white">
+      <button className="bg-primary px-3 py-1.5 rounded-md text-white flex items-center justify-center h-full">
         <FontAwesomeIcon icon={faPaperPlane} />
       </button>
     </form>

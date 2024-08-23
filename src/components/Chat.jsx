@@ -6,7 +6,7 @@ import OtherChat from "./OtherChat";
 import { chatStore } from "@/store/chatStore";
 import { userStore } from "@/store/userStore";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "@/firebase/firebase";
 import { useFormatter } from "@/lib/useFormatter";
 
 const Chat = () => {

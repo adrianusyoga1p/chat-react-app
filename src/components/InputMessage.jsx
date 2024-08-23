@@ -2,8 +2,8 @@ import upload from "@/firebase/upload";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { db } from "../../firebase";
+import { useState } from "react";
+import { db } from "@/firebase/firebase";
 
 const InputMessage = ({ currentUser, chatId, user }) => {
   const [text, setText] = useState("");

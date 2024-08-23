@@ -1,7 +1,7 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "@/firebase/firebase";
 import { chatStore } from "@/store/chatStore";
 import { userStore } from "@/store/userStore";
 import avatar from "@/assets/avatar.jpg";

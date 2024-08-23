@@ -5,9 +5,9 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useState } from "react";
-import { auth, db } from "../../../firebase";
 import { NavLink } from "react-router-dom";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "@/firebase/firebase";
 
 const Login = () => {
   const [form, setForm] = useState({

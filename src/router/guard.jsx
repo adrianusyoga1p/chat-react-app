@@ -3,7 +3,7 @@ import { userStore } from "@/store/userStore";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth } from "@/firebase/firebase";
 
 const GuardedRoute = ({ children }) => {
   const { currentUser, isLoading, fetchUserInfo } = userStore();

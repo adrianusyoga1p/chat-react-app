@@ -9,7 +9,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-import { auth, db } from "../../../firebase";
+import { auth, db } from "@/firebase/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import upload from "@/firebase/upload";
 import { NavLink, useNavigate } from "react-router-dom";

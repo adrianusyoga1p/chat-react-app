@@ -1,6 +1,6 @@
 import { userStore } from "@/store/userStore";
 import ChatList from "./ChatList";
-import { auth, db } from "../../firebase";
+import { auth, db } from "@/firebase/firebase";
 import { chatStore } from "@/store/chatStore";
 import BaseInput from "./BaseInput";
 import { useEffect, useState } from "react";

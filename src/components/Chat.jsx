@@ -41,12 +41,14 @@ const Chat = () => {
               message={msg.text}
               createdAt={formatDate(msg.createdAt.toString())}
               key={i}
+              image={msg.img}
             />
           ) : (
             <OtherChat
               message={msg.text}
               key={i}
               createdAt={formatDate(msg.createdAt.toString())}
+              image={msg.img}
             />
           )
         )}

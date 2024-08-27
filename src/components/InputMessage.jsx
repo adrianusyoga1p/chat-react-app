@@ -21,8 +21,7 @@ const InputMessage = ({ currentUser, chatId, user }) => {
     }
   };
 
-  const send = async (e) => {
-    e.preventDefault();
+  const send = async () => {
     let imgUrl = null;
     if (text === "" && img.file === null) return;
 
@@ -77,16 +76,17 @@ const InputMessage = ({ currentUser, chatId, user }) => {
   const isMac = navigator.userAgent.indexOf("MAX") >= 0;
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      if ((isMac && e.ctrlKey) || (!isMac && e.metaKey)) {
-        setText((prev) => prev + "\n");
-      }
+    if (e.key === "Enter" && (!isMac && e.ctrlKey) || (isMac && e.metaKey)) {
+      setText((prev) => prev + "\n");
+    } else if (e.key === "Enter"){
+      e.preventDefault();
+      send();
     }
   };
 
   return (
     <>
-      <form onSubmit={send} className="relative w-full">
+      <form className="relative w-full">
         <div
           className={`bg-white w-full transition h-auto max-h-72 overflow-hidden absolute left-0 p-4 rounded-t-lg ${
             img.url == "" ? "bottom-0 translate-y-0" : "-translate-y-full top-2"
@@ -99,7 +99,7 @@ const InputMessage = ({ currentUser, chatId, user }) => {
             <input
               type="file"
               id="file"
-              style={{ display: "none" }}
+              className="hidden"
               onChange={handleImg}
             />
             <label htmlFor="file">
@@ -115,7 +115,7 @@ const InputMessage = ({ currentUser, chatId, user }) => {
             value={text}
             onKeyDown={handleKeyDown}
             onChange={(e) => setText(e.target.value)}
-            className="border-none outline-none p-2 w-full placeholder:text-gray-400 placeholder:font-normal resize-none h-10"
+            className="border-none outline-none p-2 w-full placeholder:text-gray-400 placeholder:font-normal resize-none min-h-10 h-10 max-h-32"
             placeholder="Input messages"
           ></textarea>
           <button

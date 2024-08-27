@@ -88,7 +88,7 @@ const AddUser = ({ close }) => {
   };
 
   return (
-    <div className="fixed w-screen h-screen bg-black/60 inset-0 z-30 p-10 flex justify-center items-center">
+    <div className="fixed w-screen h-screen bg-black/60 inset-0 z-50 p-10 flex justify-center items-center">
       <div className="bg-white rounded-lg h-fit text-start w-fit p-6 space-y-4">
         <div className="flex items-center justify-between">
           <h4 className="text-gray-800 text-lg">Add User</h4>

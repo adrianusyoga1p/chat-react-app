@@ -83,7 +83,7 @@ const ChatHeader = ({ user }) => {
     }
   };
   return (
-    <div className="sticky w-full rounded-lg bg-white p-2.5 top-0 shadow-md">
+    <div className="sticky w-full rounded-lg bg-white p-2.5 top-0 shadow-md z-10">
       <div className="flex gap-4 items-center">
         <img
           src={user?.avatar || avatar}

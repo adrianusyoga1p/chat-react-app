@@ -142,7 +142,7 @@ const UserList = () => {
         ))}
         {addUser && <AddUser close={handleClose} />}
       </div>
-      <div className="w-full absolute bottom-0 bg-gradient-to-t from-white h-40 left-0 right-0 pointer-events-none"></div>
+      <div className="w-full absolute bottom-0 bg-gradient-to-t from-white/80 h-40 left-0 right-0 pointer-events-none"></div>
     </div>
   );
 };

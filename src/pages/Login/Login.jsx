@@ -65,40 +65,41 @@ const Login = () => {
       <div className="rounded-2xl h-full bg-primary max-md:hidden"></div>
       <div className="p-4 flex items-center justify-center">
         <div className="space-y-4">
-          <h1 className="text-center font-bold text-gray-700 text-2xl">
-            Login
-          </h1>
-          <BaseInput
-            label="Email"
-            className="min-w-64 lg:min-w-96"
-            onChange={(e) =>
-              setForm({
-                ...form,
-                email: e.target.value,
-              })
-            }
-          />
-          <BaseInput
-            type="password"
-            label="Password"
-            className="min-w-64 lg:min-w-96"
-            onChange={(e) =>
-              setForm({
-                ...form,
-                password: e.target.value,
-              })
-            }
-          />
-          <button
-            disabled={loading}
-            type="submit"
-            onClick={login}
-            className={`bg-primary p-3 rounded text-white flex w-full justify-center items-center ${
-              loading && "opacity-75"
-            }`}
-          >
-            Login
-          </button>
+          <form onSubmit={login} className="space-y-4">
+            <h1 className="text-center font-bold text-gray-700 text-2xl">
+              Login
+            </h1>
+            <BaseInput
+              label="Email"
+              className="min-w-64 lg:min-w-96"
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  email: e.target.value,
+                })
+              }
+            />
+            <BaseInput
+              type="password"
+              label="Password"
+              className="min-w-64 lg:min-w-96"
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  password: e.target.value,
+                })
+              }
+            />
+            <button
+              disabled={loading}
+              type="submit"
+              className={`bg-primary p-3 rounded text-white flex w-full justify-center items-center ${
+                loading && "opacity-75"
+              }`}
+            >
+              Login
+            </button>
+          </form>
           <div className="flex w-full items-center gap-6">
             <div className="h-px bg-gray-300 w-full"></div>
             <p>or</p>

@@ -1,3 +1,5 @@
+import React from "react";
+
 const OtherChat = ({ message, createdAt, image }) => {
   const lines = message.split("\n").filter((line) => line.trim() !== "");
   return (

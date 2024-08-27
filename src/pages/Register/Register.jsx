@@ -70,7 +70,16 @@ const Register = () => {
         form.email,
         form.password
       );
-      const imgAvatar = avatar.file? await upload(avatar.file) : avatarDefault;
+      let imgAvatar;
+      if (avatar.file) {
+        imgAvatar = await upload(avatar.file);
+      } else {
+        // Automatically upload the default avatar
+        const defaultAvatarFile = await fetch(avatarDefault)
+          .then((res) => res.blob())
+          .then((blob) => new File([blob], "avatar.jpg", { type: "image/jpeg" }));
+        imgAvatar = await upload(defaultAvatarFile);
+      }
 
       await setDoc(doc(db, "users", res.user.uid), {
         username: form.username,
@@ -132,7 +141,7 @@ const Register = () => {
           />
           {avatar.url && (
             <img
-              src={avatar.url || avatarDefault}
+              src={avatar.url}
               className="w-20 h-20 object-contain"
             />
           )}

@@ -21,7 +21,8 @@ const InputMessage = ({ currentUser, chatId, user }) => {
     }
   };
 
-  const send = async () => {
+  const send = async (e) => {
+    e.preventDefault();
     let imgUrl = null;
     if (text === "" && img.file === null) return;
 
@@ -80,13 +81,13 @@ const InputMessage = ({ currentUser, chatId, user }) => {
       setText((prev) => prev + "\n");
     } else if (e.key === "Enter"){
       e.preventDefault();
-      send();
+      send(e);
     }
   };
 
   return (
     <>
-      <form className="relative w-full">
+      <form onSubmit={send} className="relative w-full">
         <div
           className={`bg-white w-full transition h-auto max-h-72 overflow-hidden absolute left-0 p-4 rounded-t-lg ${
             img.url == "" ? "bottom-0 translate-y-0" : "-translate-y-full top-2"

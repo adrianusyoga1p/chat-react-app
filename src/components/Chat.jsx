@@ -39,7 +39,7 @@ const Chat = () => {
     if (typeof date === "object" && date.seconds) {
       messageDate = moment.unix(date.seconds);
     } else {
-      messageDate = moment(date); // For ISO date string or other formats
+      messageDate = moment(date);
     }
 
     if (!messageDate.isValid()) {
@@ -80,11 +80,9 @@ const Chat = () => {
   };
 
   const formattedMessages = {
-    createdAt: chat?.messages[0].createdAt,
+    createdAt: chat?.messages[0]?.createdAt,
     newMessages: groupMessagesByDate(chat?.messages),
   };
-
-  console.log(formattedMessages.newMessages);
 
   if (!formattedMessages || !formattedMessages?.newMessages) {
     return <Loading />;
@@ -99,20 +97,20 @@ const Chat = () => {
             <div className="sticky p-2 text-sm rounded bg-white top-0 mx-auto w-fit z-20">
               {formatingDate(date)}
             </div>
-            {formattedMessages?.newMessages[date].map((msg, index) => {
+            {formattedMessages?.newMessages[date]?.map((msg, index) => {
               return msg?.senderId === currentUser?.id ? (
                 <CurrentChat
-                  message={msg.text}
-                  createdAt={formatDate(msg.createdAt.toString())}
+                  message={msg?.text}
+                  createdAt={formatDate(msg?.createdAt?.toString())}
                   key={index}
-                  image={msg.img}
+                  image={msg?.img}
                 />
               ) : (
                 <OtherChat
-                  message={msg.text}
+                  message={msg?.text}
                   key={index}
-                  createdAt={formatDate(msg.createdAt.toString())}
-                  image={msg.img}
+                  createdAt={formatDate(msg?.createdAt?.toString())}
+                  image={msg?.img}
                 />
               );
             })}

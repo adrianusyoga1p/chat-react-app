@@ -64,14 +64,13 @@ const InputMessage = ({ currentUser, chatId, user }) => {
           });
         }
       });
-    } catch (error) {
-      console.log(error);
-    } finally {
       setImg({
         file: null,
         url: "",
       });
       setText("");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -80,7 +79,6 @@ const InputMessage = ({ currentUser, chatId, user }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       if ((isMac && e.ctrlKey) || (!isMac && e.metaKey)) {
-        // Ctrl + Enter: Add a new line in the message
         setText((prev) => prev + "\n");
       }
     }
@@ -90,13 +88,13 @@ const InputMessage = ({ currentUser, chatId, user }) => {
     <>
       <form onSubmit={send} className="relative w-full">
         <div
-          className={`bg-white w-full transition h-auto max-h-72 overflow-hidden absolute left-0 p-4 rounded-t-lg z-10 ${
+          className={`bg-white w-full transition h-auto max-h-72 overflow-hidden absolute left-0 p-4 rounded-t-lg ${
             img.url == "" ? "bottom-0 translate-y-0" : "-translate-y-full top-2"
           }`}
         >
           <img src={img.url} className="rounded w-full object-center" />
         </div>
-        <div className="flex items-center sticky z-50 shadow-md rounded-lg bg-white p-2.5 bottom-0">
+        <div className="flex items-center sticky z-10 shadow-md rounded-lg bg-white p-2.5 bottom-0">
           <div className="cursor-pointer p-2">
             <input
               type="file"

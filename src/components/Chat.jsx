@@ -91,7 +91,7 @@ const Chat = () => {
   return (
     <div className="p-6 bg-soft_primary w-[calc(100%-320px)] max-h-screen relative flex-col flex justify-between">
       <ChatHeader user={user} chatId={chatId} currentUser={currentUser} />
-      <div className="relative pt-4 mt-auto h-fit max-h-full overflow-y-auto scroll scroll-auto">
+      <div className="relative pt-4 mt-auto h-fit max-h-full overflow-y-auto scroll scroll-auto space-y-4">
         {Object.keys(formattedMessages?.newMessages).map((date, i) => (
           <div className="space-y-4" key={i}>
             <div className="sticky p-2 text-sm rounded bg-white top-0 mx-auto w-fit z-20">
@@ -116,7 +116,7 @@ const Chat = () => {
             })}
           </div>
         ))}
-        <div className="mb-4" ref={endRef}></div>
+        <div ref={endRef}></div>
       </div>
       <InputMessage currentUser={currentUser} chatId={chatId} user={user} />
     </div>

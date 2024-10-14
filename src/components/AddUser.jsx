@@ -27,13 +27,12 @@ const AddUser = ({ close }) => {
       const userRef = collection(db, "users");
       const querySnapshot = await getDocs(userRef);
 
-      // Filter documents using includes for partial username matching
       const matchingUsers = querySnapshot.docs.filter((doc) =>
         doc.data().username.toLowerCase().includes(username.toLowerCase())
       );
 
       if (matchingUsers.length > 0) {
-        setUser(matchingUsers[0].data()); // You can adjust if you want to handle multiple results
+        setUser(matchingUsers[0].data());
       }
     } catch (error) {
       console.log(error);
@@ -51,7 +50,6 @@ const AddUser = ({ close }) => {
       const chatExists = currentChats.some(
         (chat) => chat.receiverId === currentUser.id
       );
-      console.log(currentChats);
 
       if (chatExists) {
         setDisabled(true);

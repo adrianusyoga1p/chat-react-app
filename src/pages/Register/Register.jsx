@@ -74,7 +74,6 @@ const Register = () => {
       if (avatar.file) {
         imgAvatar = await upload(avatar.file);
       } else {
-        // Automatically upload the default avatar
         const defaultAvatarFile = await fetch(avatarDefault)
           .then((res) => res.blob())
           .then((blob) => new File([blob], "avatar.jpg", { type: "image/jpeg" }));
